@@ -3,6 +3,10 @@
 @import "./vars.scss";
 @import "./reset.scss";
 
+// libs
+@import "../../components/bootstrap/scss/bootstrap.scss";
+@import "../../components/bootstrap-select/bootstrap-select.scss";
+
 // blocks
 @import "../../blocks/main-header/main-header.scss";
 @import "../../blocks/main-content/main-content.scss";
@@ -11,3 +15,6 @@
 // components
 @import "../../components/custom-datepicker/bootstrap-datepicker.min.css";
 @import "../../components/custom-datepicker/custom-datepicker.scss";
+
+// elements
+@import "../../elements/select-container/select-container.scss";

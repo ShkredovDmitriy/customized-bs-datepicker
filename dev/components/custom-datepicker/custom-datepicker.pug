@@ -1,9 +1,13 @@
+include ../../elements/select-container/select-container
+
 .custom-datepicker__wrapper
   .custom-datepicker__title Выбрать срок годности файла
   .custom-datepicker__controls
     button.custom-datepicker__prev
     .custom-datepicker__select
+      +select-container-month
     .custom-datepicker__select
+      +select-container-year
     button.custom-datepicker__next
   .custom-datepicker
     input(type="text").custom-datepicker__input-field
