@@ -49,10 +49,13 @@
 
     table {
       border-spacing: 0.5rem 0.5rem;
+      border-collapse: separate;
     }
 
     thead {
-      display: none;
+      tr:nth-child(-n + 2) {
+        display: none;
+      }
     }
 
     tfoot {

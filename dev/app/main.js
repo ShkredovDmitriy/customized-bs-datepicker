@@ -1,93 +1,43 @@
 import "../common/scss/main.scss";
 
-$(".custom-datepicker").datepicker({});
+const bsDatepick = $("#customizedBsDatepicker");
+const selectMonths = $("#bsDatepickerMonthSelect");
+const selectYears = $("#bsDatepickerYearSelect");
+const prevButton = $(".custom-datepicker__prev");
+const nextButton = $(".custom-datepicker__next");
 
+bsDatepick.datepicker({});
 let currentSelectedDate = new Date();
 
-//
-$("#bsDatepickerMonthSelect").on("changed.bs.select", function(e) {
-  console.log(e.target.value);
+// listen select changed.bs.select
+selectMonths.on("changed.bs.select", function(e) {
   currentSelectedDate.setMonth(e.target.value);
-  $(".custom-datepicker").datepicker("update", currentSelectedDate);
+  bsDatepick.datepicker("update", currentSelectedDate);
 });
-
-//
-$("#bsDatepickerYearSelect").on("changed.bs.select", function(e) {
-  console.log(e.target.value);
+selectYears.on("changed.bs.select", function(e) {
   currentSelectedDate.setFullYear(e.target.value);
-  $(".custom-datepicker").datepicker("update", currentSelectedDate);
+  bsDatepick.datepicker("update", currentSelectedDate);
 });
 
-function bsDpickerSetNextMonth() {
+// click next prev months
+function bsDpickerSetPrevNextMonth(step) {
   let currentMonth = currentSelectedDate.getMonth();
-  currentMonth += 1;
+  currentMonth += step;
   currentSelectedDate.setMonth(currentMonth);
-  $(".custom-datepicker").datepicker("update", currentSelectedDate);
-  $("#bsDatepickerMonthSelect").selectpicker(
-    "val",
-    currentSelectedDate.getMonth()
-  );
-  $("#bsDatepickerYearSelect").selectpicker(
-    "val",
-    currentSelectedDate.getFullYear()
-  );
+  bsDatepick.datepicker("update", currentSelectedDate);
+  selectMonths.selectpicker("val", currentSelectedDate.getMonth());
+  selectYears.selectpicker("val", currentSelectedDate.getFullYear());
 }
+prevButton.on("click", () => bsDpickerSetPrevNextMonth(-1));
+nextButton.on("click", () => bsDpickerSetPrevNextMonth(1));
 
-function bsDpickerSetPrevMonth() {
-  let currentMonth = currentSelectedDate.getMonth();
-  currentMonth -= 1;
-  currentSelectedDate.setMonth(currentMonth);
-  $(".custom-datepicker").datepicker("update", currentSelectedDate);
-  $("#bsDatepickerMonthSelect").selectpicker(
-    "val",
-    currentSelectedDate.getMonth()
-  );
-  $("#bsDatepickerYearSelect").selectpicker(
-    "val",
-    currentSelectedDate.getFullYear()
-  );
-}
+// start today date
+bsDatepick.datepicker("update", new Date());
+selectMonths.selectpicker("val", currentSelectedDate.getMonth());
+selectYears.selectpicker("val", currentSelectedDate.getFullYear());
 
-//
-$(".custom-datepicker").datepicker("update", new Date());
-$("#bsDatepickerMonthSelect").selectpicker(
-  "val",
-  currentSelectedDate.getMonth()
-);
-$("#bsDatepickerYearSelect").selectpicker(
-  "val",
-  currentSelectedDate.getFullYear()
-);
-
-//
-$(".custom-datepicker__prev").on("click", () => {
-  bsDpickerSetPrevMonth();
-  console.log("prev");
+bsDatepick.datepicker().on("changeDate", function(e) {
+  currentSelectedDate = new Date(e.date);
+  selectMonths.selectpicker("val", currentSelectedDate.getMonth());
+  selectYears.selectpicker("val", currentSelectedDate.getFullYear());
 });
-
-$(".custom-datepicker__next").on("click", () => {
-  bsDpickerSetNextMonth();
-  console.log("next");
-});
-
-$(".custom-datepicker")
-  .datepicker()
-  .on("changeDate", function(e) {
-    currentSelectedDate = new Date(e.date);
-    $("#bsDatepickerMonthSelect").selectpicker(
-      "val",
-      currentSelectedDate.getMonth()
-    );
-    $("#bsDatepickerYearSelect").selectpicker(
-      "val",
-      currentSelectedDate.getFullYear()
-    );
-    console.log(
-      currentSelectedDate +
-        "-" +
-        currentSelectedDate.getMonth() +
-        "-" +
-        currentSelectedDate.getFullYear()
-    );
-    //
-  });
